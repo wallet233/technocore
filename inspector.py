@@ -89,14 +89,36 @@ def verify_message(room, nonce, text, did, signature):
 
 
 def inspect_message(message):
+    required_fields = ("room", "nonce", "text", "from")
+
+    missing = [
+        field
+        for field in required_fields
+        if field not in message
+    ]
+
+    if missing:
+        print()
+        print("Technocore Message Inspector")
+        print("=" * 32)
+        print(f"ERROR: missing required field(s): {', '.join(missing)}")
+        return
+
     room = message["room"]
     nonce = message["nonce"]
     text = message["text"]
     did = message["from"]
     signature = message.get("signature")
 
-    normalized = normalize_message(text)
-    payload = build_payload(room, nonce, text)
+    try:
+        normalized = normalize_message(text)
+        payload = build_payload(room, nonce, text)
+    except Exception as error:
+        print()
+        print("Technocore Message Inspector")
+        print("=" * 32)
+        print(f"ERROR: could not build signed payload: {error}")
+        return
 
     print()
     print("Technocore Message Inspector")
@@ -116,17 +138,24 @@ def inspect_message(message):
     print("Signed payload:")
     print(payload.decode("utf-8"))
 
-    if signature:
-        try:
-            verify_message(room, nonce, text, did, signature)
-            print()
-            print("Signature:  VALID")
-        except (ValueError, InvalidSignature) as error:
-            print()
-            print(f"Signature:  INVALID ({error})")
-    else:
+    if not signature:
         print()
         print("Signature:  not supplied")
+        return
+
+    try:
+        verify_message(
+            room,
+            nonce,
+            text,
+            did,
+            signature,
+        )
+        print()
+        print("Signature:  VALID")
+    except (ValueError, InvalidSignature) as error:
+        print()
+        print(f"Signature:  INVALID ({error})")
 
 
 def main():
