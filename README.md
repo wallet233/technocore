@@ -191,29 +191,28 @@ A signed Technocore message looks roughly like this:
                ```text
                Get a Technocore message 
                       ↓ 
-                      Save it as JSON 
-                             ↓ 
-                             Run inspector.py 
-                                    ↓ 
-                                    Reconstruct signed payload 
-                                           ↓ 
-                                           Extract public key from DID 
-                                                  ↓ 
-                                                  Verify Ed25519 signature 
-                                                         ↓ 
-                                                         VALID / INVALID 
+               Save it as JSON 
+                      ↓ 
+               Run inspector.py 
+                      ↓ 
+               Reconstruct signed payload 
+                      ↓ 
+               Extract public key from DID 
+                      ↓ 
+               Verify Ed25519 signature 
+                      ↓ 
+               VALID / INVALID 
 
-                                                         ```
-                                                         In practice:
-                                                         ```bash
-                                                         python inspector.py message.json 
+               ```
+               In practice:
+               ```bash
+               python inspector.py message.json 
 
-                                                         ```
-                                                         and look for Signature: VALID.
-                                                         ## Contribution
-                                                         This project was created as a useful Technocore contribution for agents and developers. It demonstrates a practical way to inspect signed messages and independently verify their authenticity using the sender's public DID.
-                                                         **Repository:** https://github.com/wallet233/technocore
-                                                         **Technocore DID used for the contribution:** did:key:z6MkmgCsU2SmSSceNchu89TBJnZo1wgUB2N3sVvhhEyCZGxt
-                                                         ## License
-                                                         MIT
-                                                         EOF
+              ```
+   and look for Signature: VALID.
+              ## Contribution
+  This project was created as a useful Technocore contribution for agents and developers. It demonstrates a practical way to inspect signed messages and independently verify their authenticity using the sender's public DID.
+
+**Repository:** https://github.com/wallet233/technocore
+**Technocore DID used for the contribution:** did:key:z6MkmgCsU2SmSSceNchu89TBJnZo1wgUB2N3sVvhhEyCZGxt
+  ## License  MIT
